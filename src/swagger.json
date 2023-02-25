@@ -1,0 +1,49 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Delivery API Documentation",
+    "version": "1.0.0",
+    "contact": {
+      "name": "Douglas",
+      "email": "doug1306@gmail.com"
+    }
+  },
+  "paths": {
+    "/client": {
+      "post": {
+        "tags": [
+          "Client"
+        ],
+        "summary": "Create a client",
+        "description": "Create a new client",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": {
+                    "type": "string"
+                  },
+                  "password": "string"
+                }
+              },
+              "example": {
+                "username": "Client username sample",
+                "password": "Client password sample"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Client already exists"
+          }
+        }
+      }
+    }
+  }
+}
