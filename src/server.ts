@@ -1,29 +1,34 @@
-import express, { NextFunction, Request, Response } from 'express'
-import 'express-async-errors'
-import { routes } from './modules/routes/routes'
-import swaggerUi from 'swagger-ui-express'
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable import-helpers/order-imports */
+import express, { NextFunction, Request, Response } from "express";
 
-import swaggerFile from './swagger.json'
+import "express-async-errors";
+import swaggerUi from "swagger-ui-express";
 
-const app = express()
+import { routes } from "./modules/routes/routes";
+import swaggerFile from "./swagger.json";
 
-app.use(express.json())
+const app = express();
 
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerFile))
+app.use(express.json());
 
-app.use(routes)
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
-app.use((err: Error, request: Request, response: Response, next: NextFunction) => {
+app.use(routes);
+
+app.use(
+  (err: Error, request: Request, response: Response, next: NextFunction) => {
     if (err instanceof Error) {
-        return response.status(400).json({
-            message: err.message
-        })
+      return response.status(400).json({
+        message: err.message,
+      });
     }
 
     return response.status(500).json({
-        status: 'error',
-        message: 'Internal server error'
-    })
-})
+      status: "error",
+      message: "Internal server error",
+    });
+  }
+);
 
-app.listen(3333, () => console.log('Server is running'))
+app.listen(3333, () => console.log("Server is running"));

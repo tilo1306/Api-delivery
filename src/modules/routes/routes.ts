@@ -1,11 +1,12 @@
-import { deliveryRoutes } from "./delivery.routes";
 import { Router } from "express";
+
 import { routesClient } from "./client.routes";
+import { deliveryRoutes } from "./delivery.routes";
 
-const routes = Router()
+const routes = Router();
 
-routes.use('/client', routesClient)
-routes.use('/delivery', deliveryRoutes)
-routes.use('/deliveryman', deliveryRoutes)
+routes.use("/client", routesClient);
+routes.use("/delivery", deliveryRoutes);
+routes.use("/deliveryman", deliveryRoutes);
 
-export { routes }
+export { routes };
