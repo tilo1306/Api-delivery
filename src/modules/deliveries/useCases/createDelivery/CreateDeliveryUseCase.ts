@@ -1,18 +1,17 @@
-import { prisma } from "../../../../database/prismaClient";
+/* eslint-disable prettier/prettier */
+import { inject, injectable } from "tsyringe";
 
-interface ICreateDelivery {
-  item_name: string;
-  id_client: string;
-}
+import { ICreateDeliveryDTO } from "../../dtos/ICreateDeliveryDTO";
+import { IDeliveryRepository } from "../../repositories/IDeliveryRepository";
 
+@injectable()
 export class CreateDeliveryUseCase {
-  async execute({ id_client, item_name }: ICreateDelivery) {
-    const delivery = await prisma.deliveries.create({
-      data: {
-        item_name,
-        id_client,
-      },
-    });
+  constructor(
+    @inject("DeliveryRepository")
+    private deliveryRepository: IDeliveryRepository
+  ) { }
+  async execute({ id_client, item_name }: ICreateDeliveryDTO) {
+    const delivery = await this.deliveryRepository.create({ id_client, item_name })
 
     return delivery;
   }

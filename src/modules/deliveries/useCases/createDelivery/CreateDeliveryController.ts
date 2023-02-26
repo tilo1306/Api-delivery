@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import { container } from "tsyringe";
 
 import { CreateDeliveryUseCase } from "./CreateDeliveryUseCase";
 
@@ -7,7 +8,7 @@ export class CreateDeliveryController {
     const { item_name } = request.body;
 
     const { id_client } = request;
-    const createDeliveryUseCase = new CreateDeliveryUseCase();
+    const createDeliveryUseCase = container.resolve(CreateDeliveryUseCase);
 
     const delivery = await createDeliveryUseCase.execute({
       id_client,

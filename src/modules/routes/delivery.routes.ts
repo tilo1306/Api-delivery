@@ -19,7 +19,7 @@ deliveryRoutes.post(
   ensureAuthenticateClient,
   createDeliveryController.handle
 );
-deliveryRoutes.post(
+deliveryRoutes.get(
   "/available",
   ensureAuthenticateDeliveryman,
   findAllAvailableController.handle

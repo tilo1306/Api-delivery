@@ -1,20 +1,24 @@
+/* eslint-disable prettier/prettier */
 import { compare } from "bcrypt";
 import { sign } from "jsonwebtoken";
+import { inject, injectable } from "tsyringe";
 
-import { prisma } from "../../../../database/prismaClient";
+import { IAccountRepository } from "../../repositories/IAccountRepository";
 
 interface IAuthenticateClient {
   username: string;
   password: string;
 }
 
+@injectable()
 export class AuthenticateClientUseCase {
-  async execute({ username, password }: IAuthenticateClient) {
-    const client = await prisma.clients.findFirst({
-      where: {
-        username,
-      },
-    });
+  constructor(
+    @inject("AccountRepository")
+    private accountRepository: IAccountRepository
+  ) { }
+
+  async execute({ username, password }: IAuthenticateClient): Promise<string> {
+    const client = await this.accountRepository.findByClient(username);
 
     if (!client) {
       throw new Error("Username or passsword invalid!");

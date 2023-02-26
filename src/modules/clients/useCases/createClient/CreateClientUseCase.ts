@@ -1,7 +1,7 @@
+/* eslint-disable prettier/prettier */
 import { hash } from "bcrypt";
 import { injectable, inject } from "tsyringe";
 
-import { prisma } from "../../../../database/prismaClient";
 import { ICreateClientDTO } from "../../dtos/ICreateClientDTO";
 import { IClientRepository } from "../../repositories/IClientRepository";
 
@@ -21,12 +21,6 @@ export class CreateClientUseCase {
 
     const hashPassword = await hash(password, 10);
 
-    const client = await prisma.clients.create({
-      data: {
-        username,
-        password: hashPassword,
-      },
-    });
-    return client;
+    this.clientRepository.create({ username, password: hashPassword })
   }
 }
