@@ -21,7 +21,7 @@ describe("Authenticate Client", () => {
     );
   });
 
-  it("", async () => {
+  it("should be able to authenticate an client", async () => {
     await accountRepositoryInMemory.create({
       username,
       password,
@@ -33,5 +33,28 @@ describe("Authenticate Client", () => {
     });
 
     expect(test).toEqual(token);
+  });
+
+  it("should not be able to authenticate an nonexistent user", async () => {
+    await expect(
+      authenticateClientUseCase.execute({
+        username: "erroUsername",
+        password: "1234",
+      })
+    ).rejects.toEqual(new Error("Username or password invalid!"));
+  });
+
+  it("should not be able to authenticate with incorrect client", async () => {
+    await accountRepositoryInMemory.create({
+      username,
+      password,
+    });
+
+    await expect(
+      authenticateClientUseCase.execute({
+        username,
+        password: "password invalid",
+      })
+    ).rejects.toEqual(new Error("Username or password invalid!"));
   });
 });

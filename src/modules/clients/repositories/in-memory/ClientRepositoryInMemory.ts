@@ -43,7 +43,6 @@ export class ClientRepositoryInMemory implements IClientRepository {
         deliveries: [],
       });
     }
-    console.log(this.clients);
 
     return clientDeliveries;
   }

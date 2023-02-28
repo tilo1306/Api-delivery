@@ -20,7 +20,7 @@ describe("Create Client", () => {
   });
 
   it("Should not be able to create a new client with exists username", async () => {
-    await createClientUseCase.execute({
+    await clientRepositoryInMemory.create({
       username: "usernameTest",
       password: "passwordTest",
     });
