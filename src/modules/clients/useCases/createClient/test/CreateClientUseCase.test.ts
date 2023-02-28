@@ -9,6 +9,7 @@ describe("Create Client", () => {
     clientRepositoryInMemory = new ClientRepositoryInMemory();
     createClientUseCase = new CreateClientUseCase(clientRepositoryInMemory);
   });
+
   it("Should be able to create a new client", async () => {
     expect(async () => {
       await createClientUseCase.execute({
@@ -17,6 +18,7 @@ describe("Create Client", () => {
       });
     }).not.toThrow();
   });
+
   it("Should not be able to create a new client with exists username", async () => {
     await createClientUseCase.execute({
       username: "usernameTest",

@@ -4,7 +4,7 @@ import { container } from "tsyringe";
 import { FindAllDeliveriesUseCase } from "./FindAllDeliveriesUseCase";
 
 export class FindAllDeliveriesController {
-  async handle(request: Request, response: Response) {
+  async handle(request: Request, response: Response): Promise<Response> {
     const { id_client } = request;
 
     const findAllDeliveriesUseCase = container.resolve(

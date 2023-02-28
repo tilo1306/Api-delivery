@@ -1,5 +1,6 @@
 /* eslint-disable no-plusplus */
 import { Clients } from "@prisma/client";
+import { hash } from "bcrypt";
 
 import { ICreateClientDTO } from "../../dtos/ICreateClientDTO";
 import { IResponseFindByDeliveriesDTO } from "../../dtos/IResponseFindByDeliveriesDTO";
@@ -12,7 +13,7 @@ export class ClientRepositoryInMemory implements IClientRepository {
     this.clients.push({
       id: this.clients.length.toString(),
       username,
-      password,
+      password: await hash(password, 10),
     });
   }
   async findByUsername(username: string): Promise<Clients | null> {
@@ -31,17 +32,18 @@ export class ClientRepositoryInMemory implements IClientRepository {
   ): Promise<IResponseFindByDeliveriesDTO[]> {
     const clientDeliveries = [];
 
-    const filterClient = this.clients.filter(
+    const filterClient = await this.clients.filter(
       (client) => client.id === id_client
     );
 
-    for (let index = 0; index < this.clients.length; index++) {
+    for (let index = 0; index < filterClient.length; index++) {
       clientDeliveries.push({
         id: filterClient[index].id,
         username: filterClient[index].username,
         deliveries: [],
       });
     }
+    console.log(this.clients);
 
     return clientDeliveries;
   }
