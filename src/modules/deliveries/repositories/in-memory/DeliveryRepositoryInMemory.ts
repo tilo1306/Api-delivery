@@ -29,11 +29,16 @@ export class DeliveryRepositoryInMemory implements IDeliveryRepository {
       (delivery) => delivery.end_at === null && delivery.id_deliveryman === null
     );
   }
-  findByDeliveryAddDeliveryman({
+  async findByDeliveryAddDeliveryman({
     id_delivery,
     id_deliveryman,
   }: IUpdateDeliverymanDTO): Promise<Deliveries> {
-    throw new Error("Method not implemented.");
+    const filterDelivery = this.deliveries.find(
+      (delivery) => delivery.id === id_delivery
+    ) as Deliveries;
+    filterDelivery.id_deliveryman = id_deliveryman;
+
+    return filterDelivery;
   }
   findByDeliveryupdateDeliveryDate({
     id_delivery,
