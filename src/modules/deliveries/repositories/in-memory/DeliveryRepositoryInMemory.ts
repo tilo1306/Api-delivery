@@ -40,10 +40,16 @@ export class DeliveryRepositoryInMemory implements IDeliveryRepository {
 
     return filterDelivery;
   }
-  findByDeliveryupdateDeliveryDate({
+  async findByDeliveryupdateDeliveryDate({
     id_delivery,
     id_deliveryman,
   }: IUpdateDeliveryUpdateDTO): Promise<ICountDeliveryDTO> {
-    throw new Error("Method not implemented.");
+    const filterDelivery = this.deliveries.filter(
+      (delivery) =>
+        delivery.id === id_delivery &&
+        delivery.id_deliveryman === id_deliveryman
+    );
+
+    return { count: filterDelivery.length };
   }
 }
