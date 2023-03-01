@@ -30,6 +30,6 @@ describe("Create Client", () => {
         username: "usernameTest",
         password: "passwordTest",
       });
-    }).rejects.toEqual(new Error("Client already exists"));
+    }).rejects.toEqual(new Error("Username already exists"));
   });
 });

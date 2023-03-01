@@ -16,7 +16,7 @@ export class CreateDeliverymanUseCase {
     const deliverymanExist = await this.deliverymanRepository.findByUsername(username)
 
     if (deliverymanExist) {
-      throw new Error("Client already exists");
+      throw new Error("Username already exists");
     }
 
     const hashPassword = await hash(password, 10);

@@ -16,7 +16,7 @@ export class CreateClientUseCase {
     const clientExist = await this.clientRepository.findByUsername(username);
 
     if (clientExist) {
-      throw new Error("Client already exists");
+      throw new Error("Username already exists");
     }
 
     const hashPassword = await hash(password, 10);
