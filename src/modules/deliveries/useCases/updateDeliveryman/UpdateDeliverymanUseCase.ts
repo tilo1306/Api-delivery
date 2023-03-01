@@ -1,7 +1,6 @@
 /* eslint-disable prettier/prettier */
 import { inject, injectable } from "tsyringe";
 
-import { prisma } from "../../../../database/prismaClient";
 import { IDeliveryRepository } from "../../repositories/IDeliveryRepository";
 
 interface IUpdateDeliveryman {
