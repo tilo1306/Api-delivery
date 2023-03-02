@@ -1,3 +1,4 @@
+import dotenv from "dotenv";
 import { sign } from "jsonwebtoken";
 
 import { AccountRepositoryInMemory } from "../../../repositories/in-memory/AccountRepositoryInMemory";
@@ -5,11 +6,13 @@ import { AuthenticateClientUseCase } from "../AuthenticateClientUseCase";
 
 let accountRepositoryInMemory: AccountRepositoryInMemory;
 let authenticateClientUseCase: AuthenticateClientUseCase;
+
+dotenv.config();
 describe("Authenticate Client", () => {
   const username = "usernameTest";
   const password = "password";
 
-  const token = sign({ username }, "019acc25a4e242bb55ad489832ada12d", {
+  const token = sign({ username }, process.env.SECRET_KEY_CLIENT as string, {
     subject: "0",
     expiresIn: "1d",
   });

@@ -1,3 +1,4 @@
+import dotenv from "dotenv";
 import { sign } from "jsonwebtoken";
 
 import { AccountRepositoryInMemory } from "../../../repositories/in-memory/AccountRepositoryInMemory";
@@ -5,14 +6,21 @@ import { AuthenticateDeliverymanUseCase } from "../AuthenticateDeliverymanUseCas
 
 let accountRepositoryInMemory: AccountRepositoryInMemory;
 let authenticateDeliverymanUseCase: AuthenticateDeliverymanUseCase;
+
+dotenv.config();
+
 describe("Authenticate deliveryman", () => {
   const username = "usernameTest";
   const password = "password";
 
-  const token = sign({ username }, "019acc25a4e242bb55ad489832ada12d", {
-    subject: "0",
-    expiresIn: "1d",
-  });
+  const token = sign(
+    { username },
+    process.env.SECRET_KEY_DELIVERYMAN as string,
+    {
+      subject: "0",
+      expiresIn: "1d",
+    }
+  );
 
   beforeEach(() => {
     accountRepositoryInMemory = new AccountRepositoryInMemory();
