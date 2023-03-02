@@ -15,6 +15,6 @@ export class CreateDeliverymanController {
       password,
     });
 
-    return response.send();
+    return response.status(201).send();
   }
 }
