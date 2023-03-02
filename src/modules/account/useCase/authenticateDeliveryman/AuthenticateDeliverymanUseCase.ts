@@ -1,5 +1,6 @@
 /* eslint-disable prettier/prettier */
 import { compare } from "bcrypt";
+import dotenv from 'dotenv'
 import { sign } from "jsonwebtoken";
 import { inject, injectable } from "tsyringe";
 
@@ -9,6 +10,7 @@ interface IAuthenticateDeliveryman {
   username: string;
   password: string;
 }
+dotenv.config()
 
 @injectable()
 export class AuthenticateDeliverymanUseCase {
@@ -31,7 +33,7 @@ export class AuthenticateDeliverymanUseCase {
       throw new Error("Username or password invalid!");
     }
 
-    const token = sign({ username }, "019acc25a4e242bb55ad489832ada12d", {
+    const token = sign({ username }, process.env.SECRET_KEY_DELIVERYMAN as string, {
       subject: deliveryman.id,
       expiresIn: "1d",
     });
