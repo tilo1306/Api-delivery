@@ -1,5 +1,8 @@
+import dotenv from "dotenv";
 import { NextFunction, Request, Response } from "express";
 import { verify } from "jsonwebtoken";
+
+dotenv.config();
 
 interface IPayload {
   sub: string;
@@ -23,7 +26,7 @@ export async function ensureAuthenticateDeliveryman(
   try {
     const { sub } = verify(
       token,
-      "019acc25a4e242bb55ad489832ada12d"
+      process.env.SECRET_KEY_DELIVERYMAN as string
     ) as IPayload;
     request.id_deliveryman = sub;
     return next();
