@@ -34,7 +34,25 @@ describe("Find all deliveries deliveryma controller", () => {
     expect(response.body[0]).toHaveProperty("deliveries");
     expect(response.body[0]).toHaveProperty("id");
     expect(response.body[0]).toHaveProperty("username");
+  });
 
-    console.log(response.body);
+  it("Should be not autheticaty ", async () => {
+    const response = await request(app)
+      .get("/deliveryman/deliveries")
+      .set({
+        Authorization: `Bearer ${"tokenError"}}`,
+      });
+    expect(response.statusCode).toEqual(401);
+    expect(response.body).toHaveProperty("message");
+    expect(response.body.message).toEqual("Invalid token!");
+  });
+
+  it("Should be not autheticaty error invalid token", async () => {
+    const response = await request(app).get("/deliveryman/deliveries").set({
+      Authorization: ``,
+    });
+    expect(response.statusCode).toEqual(401);
+    expect(response.body).toHaveProperty("message");
+    expect(response.body.message).toEqual("Token missing");
   });
 });
