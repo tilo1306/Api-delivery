@@ -7,7 +7,9 @@ describe("Create client controller", () => {
   const username = "usernameTest";
   const password = "123456";
   beforeAll(async () => {
+    await prisma.deliveries.deleteMany({ where: {} });
     await prisma.clients.deleteMany({ where: {} });
+    await prisma.deliveryman.deleteMany({ where: {} });
   });
 
   it("Should register a new client", async () => {

@@ -11,10 +11,9 @@ describe("Create delivery controller", () => {
   beforeAll(async () => {
     const passwordHash = await hash(password, 10);
 
-    await prisma.clients.deleteMany({ where: {} });
     await prisma.deliveries.deleteMany({ where: {} });
+    await prisma.clients.deleteMany({ where: {} });
     await prisma.deliveryman.deleteMany({ where: {} });
-
     await prisma.clients.create({
       data: {
         username,
@@ -36,11 +35,11 @@ describe("Create delivery controller", () => {
         Authorization: `Bearer ${responseToken.body}`,
       });
 
-    expect(response).toHaveProperty("id");
-    expect(response).toHaveProperty("id_deliveryman");
-    expect(response).toHaveProperty("id_client");
-    expect(response).toHaveProperty("item_name");
-    expect(response).toHaveProperty("created_at");
-    expect(response).toHaveProperty("end_at");
+    expect(response.body).toHaveProperty("id");
+    expect(response.body).toHaveProperty("id_deliveryman");
+    expect(response.body).toHaveProperty("id_client");
+    expect(response.body).toHaveProperty("item_name");
+    expect(response.body).toHaveProperty("created_at");
+    expect(response.body).toHaveProperty("end_at");
   });
 });

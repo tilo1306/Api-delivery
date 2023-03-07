@@ -9,8 +9,9 @@ describe("Find all deliveries controller", () => {
   const password = "123456";
   beforeAll(async () => {
     const passwordHash = await hash(password, 10);
-    await prisma.clients.deleteMany({ where: {} });
     await prisma.deliveries.deleteMany({ where: {} });
+    await prisma.clients.deleteMany({ where: {} });
+    await prisma.deliveryman.deleteMany({ where: {} });
     await prisma.clients.create({
       data: {
         username,

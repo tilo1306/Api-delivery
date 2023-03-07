@@ -7,12 +7,17 @@ import { AuthenticateDeliverymanUseCase } from "../AuthenticateDeliverymanUseCas
 let accountRepositoryInMemory: AccountRepositoryInMemory;
 let authenticateDeliverymanUseCase: AuthenticateDeliverymanUseCase;
 
-dotenv.config();
-
 describe("Authenticate deliveryman", () => {
   const username = "usernameTest";
   const password = "password";
 
+  beforeEach(() => {
+    accountRepositoryInMemory = new AccountRepositoryInMemory();
+    authenticateDeliverymanUseCase = new AuthenticateDeliverymanUseCase(
+      accountRepositoryInMemory
+    );
+  });
+  dotenv.config();
   const token = sign(
     { username },
     process.env.SECRET_KEY_DELIVERYMAN as string,
@@ -21,13 +26,6 @@ describe("Authenticate deliveryman", () => {
       expiresIn: "1d",
     }
   );
-
-  beforeEach(() => {
-    accountRepositoryInMemory = new AccountRepositoryInMemory();
-    authenticateDeliverymanUseCase = new AuthenticateDeliverymanUseCase(
-      accountRepositoryInMemory
-    );
-  });
 
   it("should be able to authenticate an deliveryman", async () => {
     await accountRepositoryInMemory.create({

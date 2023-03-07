@@ -13,7 +13,9 @@ describe("Authenticate client", () => {
   beforeAll(async () => {
     const passwordHash = await hash(password, 10);
 
+    await prisma.deliveries.deleteMany({ where: {} });
     await prisma.clients.deleteMany({ where: {} });
+    await prisma.deliveryman.deleteMany({ where: {} });
     await prisma.clients.create({
       data: {
         username,
